@@ -3,6 +3,7 @@ $host = "localhost";    //host connection
 $dbname = "bloomQuiz";  //database name
 $dbusername = "root";   //username
 $dbpassword = "root";   //password
+
 try {
     $db = new PDO("mysql:host=$host;dbname=$dbname", "$dbusername", "$dbpassword");
 } catch (PDOException $e){
@@ -10,21 +11,15 @@ try {
     exit;
 }
 
-$query = "INSERT INTO stickers (src, x, y, room) VALUES (:src, :x, :y, :room)";
-
-$src = $_POST['src'];
-$x = $_POST['x'];
-$y = $_POST['y'];
-$room = $_POST['room'];
-
+$query = "INSERT INTO test (name) VALUES (:name)";
 $stmt = $db->prepare($query);
 
-$stmt->bindParam(":src", $src, PDO::PARAM_STR);
-$stmt->bindParam(":x", $x, PDO::PARAM_STR);
-$stmt->bindParam(":y", $y, PDO::PARAM_STR);
-$stmt->bindParam(":room", $room, PDO::PARAM_STR);
+$name = $_POST['name'];  //value inserted into
+$stmt->bindParam(":name", $name, PDO::PARAM_STR);   //binding params
 
 $stmt->execute();
 
+//$stmt->close();
+//$db->close();
 echo "connected";
 ?>
